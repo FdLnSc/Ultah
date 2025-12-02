@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Happy Birthday Tarra Cayanggg!</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        /* ========== VARIABLES & RESET ========== */
+        :root {
+            --primary: #ff6b8b;
+            --secondary: #ff99ac;
+            --text-dark: #444;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffe3e3; 
+            color: var(--text-dark);
+            overflow-x: hidden;
+            margin: 0; padding: 0;
+            position: relative;
+        }
+
+        /* ========== BACKGROUND (GLOWING ORBS) ========== */
+        .bg-fixed {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #fff0f5 0%, #e6e6fa 100%);
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: floatOrb 20s infinite alternate;
+        }
+
+        .orb-1 { width: 300px; height: 300px; background: #ffc3a0; top: -50px; left: -50px; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: #ffafbd; bottom: -100px; right: -50px; animation-delay: -5s; }
+        .orb-3 { width: 200px; height: 200px; background: #c2e9fb; top: 40%; left: 60%; animation-delay: -10s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* ========== TYPOGRAPHY & HERO ========== */
+        h1, h2, h3 { font-family: 'Dancing Script', cursive; font-weight: 700; }
+        .signature { font-family: 'Sacramento', cursive; font-size: 2rem; color: var(--primary); }
+
+        #hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding: 20px;
+        }
+
+        .threejs-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .hero-content { position: relative; z-index: 2; text-align: center; color: #444; width: 100%; max-width: 600px; }
+        
+        .birthday-title { 
+            font-size: 3.5rem; 
+            color: var(--primary);
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.8); 
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        /* ========== CAKE & FIRE ANIMATION ========== */
+        .cake-wrapper {
+            transition: transform 0.3s ease;
+            width: 260px; margin: 0 auto;
+            max-width: 100%;
+        }
+        .cake-wrapper:hover { transform: scale(1.02); }
+
+        /* Animasi Stacking */
+        .animate-stack {
+            opacity: 0; 
+            animation: stackUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes stackUp {
+            0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* --- API REALISTIS (FLUID) --- */
+        .flame-container { animation: flameWaver 3s infinite ease-in-out alternate; }
+        .flame-outer { animation: flameBurnOuter 2s infinite ease-in-out alternate; transform-origin: center bottom; }
+        .flame-inner { animation: flameBurnInner 0.8s infinite ease-in-out alternate; transform-origin: center bottom; }
+
+        @keyframes flameWaver { 0% { transform: rotate(-0.5deg); } 100% { transform: rotate(1deg); } }
+        @keyframes flameBurnOuter {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.9; }
+            50% { transform: scale(1.05, 1) translate(0, 0px); opacity: 1; }
+            100% { transform: scale(0.99, 1) translate(0, 0); opacity: 0.9; }
+        }
+        @keyframes flameBurnInner {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(0.97, 1) translate(0, 0px); }
+        }
+
+        /* --- PADAM SIMPEL --- */
+        .blown-out .flame-outer, .blown-out .flame-inner {
+            animation: none !important; 
+            opacity: 0 !important;      
+            transition: opacity 0.5s ease-out; 
+        }
+
+        /* ========== SECTIONS ========== */
+        .section { padding: 60px 20px; position: relative; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .section-title { text-align: center; font-size: 3rem; color: var(--primary); margin-bottom: 40px; }
+
+        /* About & Gallery */
+        .about-card {
+            background: rgba(255,255,255,0.8); border-radius: 20px; padding: 30px; height: 100%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; transition: 0.3s;
+        }
+        .about-card:hover { transform: translateY(-5px); background: white; }
+        .about-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
+        
+        .gallery-item {
+            border-radius: 15px; overflow: hidden; height: 200px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 4px solid white;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Love Letter (Paper Style) */
+        .paper {
+            background: #fffdf0; padding: 40px; max-width: 600px; margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background-image: repeating-linear-gradient(#fffdf0, #fffdf0 29px, #a2d2ff 30px);
+            line-height: 30px; position: relative; transform: rotate(-1deg);
+        }
+        .paper::before {
+            content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 35px; background: rgba(255,255,255,0.5);
+            border-left: 2px dashed rgba(0,0,0,0.1); border-right: 2px dashed rgba(0,0,0,0.1);
+        }
+
+        /* ========== GACHA MACHINE (DENGAN BOLA BERGERAK) ========== */
+        .gacha-box {
+            width: 240px; height: 340px; margin: 0 auto; position: relative;
+            animation: float 4s ease-in-out infinite; max-width: 100%;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .gacha-glass {
+            width: 220px; height: 220px; background: rgba(255,255,255,0.5);
+            border: 6px solid var(--primary); border-radius: 50%; margin: 0 auto;
+            position: relative; overflow: hidden; backdrop-filter: blur(5px);
+            box-shadow: inset -10px -10px 20px rgba(255,107,139,0.2); z-index: 2;
+        }
+        .gacha-base {
+            width: 180px; height: 100px; background: var(--primary);
+            margin: -50px auto 0; border-radius: 0 0 30px 30px; position: relative; z-index: 1;
+        }
+        
+        /* BOLA GACHA */
+        .ball {
+            width: 45px; height: 45px; border-radius: 50%; 
+            border: 2px solid rgba(0,0,0,0.1);
+            position: absolute; 
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
+            /* TRANSITION PENTING: Agar bola bergerak mulus saat posisi diubah JS */
+            transition: top 0.1s linear, left 0.1s linear, transform 0.1s linear;
+            /* ANIMASI IDLE: Agar bola bergoyang dikit saat diam */
+            animation: bounceIdle 2s infinite ease-in-out alternate;
+        }
+
+        @keyframes bounceIdle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
+        }
+
+        .ball:nth-child(1) { background: #ff99ac; top: 130px; left: 40px; animation-delay: 0s; }
+        .ball:nth-child(2) { background: #ffd700; top: 150px; left: 100px; animation-delay: 0.2s; }
+        .ball:nth-child(3) { background: #a2d2ff; top: 120px; left: 80px; animation-delay: 0.4s; }
+        .ball:nth-child(4) { background: #cdb4db; top: 140px; left: 140px; animation-delay: 0.6s; }
+        
+        .shake-anim { animation: shake 0.5s linear infinite; }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+        /* NEW: Animasi Spin Hadiah */
+        @keyframes spinReveal {
+            0% { transform: perspective(400px) rotateY(90deg); opacity: 0; }
+            40% { transform: perspective(400px) rotateY(-20deg); opacity: 1; }
+            60% { transform: perspective(400px) rotateY(10deg); }
+            80% { transform: perspective(400px) rotateY(-5deg); }
+            100% { transform: perspective(400px) rotateY(0deg); opacity: 1; }
+        }
+        .spin-in-gift {
+            animation: spinReveal 1s ease-out forwards;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        /* Countdown & Audio */
+        .countdown-container {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            border-radius: 20px; padding: 30px; color: white;
+            box-shadow: 0 10px 25px rgba(161, 140, 209, 0.4);
+        }
+        
+/* ========== AUDIO PLAYER STYLING (RESPONSIVE) ========== */
+.audio-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.9); /* Sedikit transparan */
+    backdrop-filter: blur(8px);
+    padding: 10px 18px;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Jarak default */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 107, 139, 0.3);
+}
+
+/* Tombol Play */
+.btn-play {
+    background: #ff6b8b;
+    color: white;
+    border: none;
+    width: 38px; /* Ukuran Desktop */
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(255, 107, 139, 0.4);
+    transition: transform 0.2s;
+}
+.btn-play:active { transform: scale(0.9); }
+
+/* Visualizer */
+.visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+    width: 30px; /* Lebar area visualizer */
+}
+.bar {
+    width: 4px;
+    background: #ff99ac;
+    border-radius: 2px;
+    height: 4px;
+    transition: height 0.1s;
+}
+/* Animasi Visualizer */
+.visualizer.playing .bar { animation: dance 0.8s infinite ease-in-out; }
+.visualizer.playing .bar:nth-child(1) { animation-delay: 0s; }
+.visualizer.playing .bar:nth-child(2) { animation-delay: 0.2s; }
+.visualizer.playing .bar:nth-child(3) { animation-delay: 0.4s; }
+.visualizer.playing .bar:nth-child(4) { animation-delay: 0.1s; }
+.visualizer.playing .bar:nth-child(5) { animation-delay: 0.3s; }
+@keyframes dance { 
+    0% { height: 4px; } 
+    50% { height: 18px; background: #ff6b8b; } 
+    100% { height: 4px; } 
+}
+
+/* Volume Control */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.volume-control i {
+    color: #ff6b8b;
+    font-size: 16px;
+}
+#volumeSlider {
+    width: 70px; /* Panjang slider desktop */
+    height: 4px;
+    -webkit-appearance: none;
+    background: #ffd1dc;
+    border-radius: 2px;
+    outline: none;
+}
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ff6b8b;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* ========== RESPONSIVE DEVICE (HP/TABLET) ========== */
+@media (max-width: 576px) {
+    .audio-player {
+        bottom: 15px;       /* Lebih mepet bawah */
+        right: 15px;        /* Lebih mepet kanan */
+        padding: 8px 12px;  /* Padding lebih kecil */
+        gap: 10px;          /* Jarak antar elemen lebih rapat */
+        transform: scale(0.9); /* Skala keseluruhan sedikit mengecil */
+        transform-origin: bottom right;
+    }
+
+    .btn-play {
+        width: 32px;        /* Tombol play lebih kecil */
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .visualizer {
+        width: 20px;        /* Area visualizer menyempit */
+        gap: 2px;
+    }
+    .bar {
+        width: 3px;         /* Batang lebih tipis */
+    }
+
+    .volume-control {
+        gap: 5px;
+    }
+    .volume-control i {
+        font-size: 14px;    /* Ikon speaker lebih kecil */
+    }
+    #volumeSlider {
+        width: 50px;        /* Slider lebih pendek agar muat */
+    }
+}
+
+        #footer {
+            background: linear-gradient(135deg, var(--dark-purple) 0%, var(--purple) 100%);
+            color: white; padding: 60px 20px; text-align: center;
+        }
+        .footer-heart {
+            font-size: 2rem; color: #ff6b8b; animation: pulse 1.5s infinite; margin-bottom: 20px;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        @media (max-width: 768px) {
+            .birthday-title { font-size: 2.5rem; }
+            .paper { padding: 30px 20px; width: 95%; font-size: 0.95rem; }
+            .section { padding: 50px 15px; }
+            .section-title { font-size: 2.5rem; }
+            .gacha-box { transform: scale(0.9); }
+            .audio-player { padding: 8px 12px; bottom: 15px; right: 15px; }
+            .audio-player i { font-size: 0.9rem; }
+            .wave { width: 3px; }
+        }
+        /* ========== SPECIAL SURPRISE ENVELOPE CSS ========== */
+.envelope-wrapper {
+    position: relative;
+    width: 280px;
+    height: 180px;
+    background: #ff8fa3;
+    margin: 0 auto;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.envelope-wrapper:hover { transform: scale(1.05); }
+
+/* Flap Atas (Penutup) */
+.envelope-wrapper::before { 
+    content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0;
+    border-left: 140px solid transparent; border-right: 140px solid transparent;
+    border-top: 100px solid #ff6b8b; transform-origin: top;
+    transition: transform 0.5s ease; z-index: 3;
+}
+
+/* Saku Bawah */
+.envelope-wrapper::after { 
+    content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0;
+    border-left: 140px solid #ff99ac; border-right: 140px solid #ff99ac;
+    border-top: 90px solid transparent; border-bottom: 90px solid #ff99ac;
+    border-radius: 0 0 10px 10px; z-index: 2;
+}
+
+/* Kartu di Dalam */
+.envelope-card { 
+    position: absolute; top: 10px; left: 10px; width: 260px; height: 160px;
+    background: white; border-radius: 5px; padding: 20px; text-align: center;
+    transition: transform 0.5s ease 0.2s; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Animasi Membuka */
+.envelope-wrapper.open::before { transform: rotateX(180deg); z-index: 0; }
+.envelope-wrapper.open .envelope-card { transform: translateY(-100px); z-index: 4; }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-fixed">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <audio id="bgMusic" loop>
+    <source src="background-music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="audio-player">
+    <button class="btn-play" id="playBtn">
+        <i class="fas fa-play"></i>
+    </button>
+
+    <div class="visualizer" id="visualizer">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <div class="volume-control">
+        <i class="fas fa-volume-up"></i> 
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+    </div>
+</div>
+
+    <section id="hero">
+        <div class="threejs-bg" id="threejsCanvas"></div>
+        <div class="hero-content">
+            <h1 class="birthday-title animate__animated animate__zoomIn">Happy Birthday,<br>Tarra! Papoi <br> Cayanggkuu Cintakuuu 💗</h1>
+            <p class="lead animate__animated animate__fadeInUp animate__delay-1s text-muted">Celebrating 19 Years of You</p>
+
+            <p class="lead animate__animated animate__fadeInUp animate__delay-1s text-muted" style="font-size: 1rem;">
+            Tiyup lilinn duyu yukk
+            </p>
+
+            <div id="cake-area" class="mt-4" style="min-height: 350px; position: relative;">
+                <div class="cake-wrapper mx-auto" onclick="blowOutCake()" style="cursor: pointer;">
+                    <svg width="260" height="320" viewBox="0 0 260 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="strawGradient" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#ff9a9e"/>
+                                <stop offset="100%" stop-color="#f68084"/>
+                            </linearGradient>
+                            <linearGradient id="frostGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#fff5f7"/>
+                                <stop offset="100%" stop-color="#ffe4e9"/>
+                            </linearGradient>
+                            <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <ellipse cx="130" cy="280" rx="110" ry="15" fill="rgba(255,255,255,0.7)" class="animate-stack" style="animation-delay: 0s;"/>
+
+                        <g class="animate-stack" style="animation-delay: 0.3s;">
+                            <path d="M30 240 C30 270, 230 270, 230 240 L230 200 C230 170, 30 170, 30 200 Z" fill="url(#strawGradient)"/>
+                            <path d="M30 200 C30 230, 230 230, 230 200 C230 170, 30 170, 30 200" fill="#ffc2c7"/>
+                            <path d="M30 240 C45 250, 60 235, 80 240 C100 245, 115 255, 130 240 C145 225, 160 245, 180 240 C200 235, 215 250, 230 240" stroke="url(#frostGradient)" stroke-width="8" stroke-linecap="round"/>
+                            <circle cx="50" cy="220" r="2" fill="#c74a50" opacity="0.6"/><circle cx="90" cy="230" r="2" fill="#c74a50" opacity="0.6"/><circle cx="150" cy="210" r="2" fill="#c74a50" opacity="0.6"/><circle cx="200" cy="225" r="2" fill="#c74a50" opacity="0.6"/>
+                        </g>
+
+                        <g class="animate-stack" style="animation-delay: 0.8s;">
+                            <path d="M60 180 C60 210, 200 210, 200 180 L200 140 C200 110, 60 110, 60 140 Z" fill="url(#strawGradient)"/>
+                            <path d="M60 140 C60 170, 200 170, 200 140 C200 110, 60 110, 60 140" fill="#ffc2c7"/>
+                            <path d="M60 180 C75 190, 90 175, 110 180 C130 185, 145 195, 160 180 C175 165, 190 185, 200 180" stroke="url(#frostGradient)" stroke-width="7" stroke-linecap="round"/>
+                            <circle cx="80" cy="160" r="2" fill="#c74a50" opacity="0.6"/><circle cx="180" cy="150" r="2" fill="#c74a50" opacity="0.6"/>
+                        </g>
+
+                        <g class="animate-stack" style="animation-delay: 1.3s;">
+                            <path d="M85 120 C85 145, 175 145, 175 120 L175 90 C175 65, 85 65, 85 90 Z" fill="url(#strawGradient)"/>
+                            <path d="M85 90 C85 115, 175 115, 175 90 C175 65, 85 65, 85 90" fill="#ffc2c7"/>
+                            <path d="M85 120 C100 128, 115 115, 130 120 C145 125, 160 128, 175 120" stroke="url(#frostGradient)" stroke-width="6" stroke-linecap="round"/>
+                        </g>
+
+                        <g class="animate-stack" style="animation-delay: 1.8s;">
+                            <g transform="translate(110, 40)">
+                                <rect x="0" y="10" width="12" height="45" rx="4" fill="#fff" stroke="#ff6b8b" stroke-width="2"/>
+                                <line x1="6" y1="10" x2="6" y2="0" stroke="#333" stroke-width="2"/>
+                                <g id="flame1" class="flame-container" style="transform-origin: 6px 0px;">
+                                    <path class="flame-outer" d="M6 -18 C12 -5, 12 5, 6 12 C0 5, 0 -5, 6 -18Z" fill="#ff9f43" filter="url(#softGlow)"/>
+                                    <path class="flame-inner" d="M6 -12 C9 -4, 9 2, 6 8 C3 2, 3 -4, 6 -12Z" fill="#fff200"/>
+                                </g>
+                            </g>
+                            <g transform="translate(140, 40)">
+                                <path d="M 23 22 A 9 9 0 1 0 5 22 A 9 9 0 0 0 23 22 L 23 45 C 23 55 10 55 5 50" 
+                                      stroke="#ff6b8b" stroke-width="14" stroke-linecap="round" fill="none"/>
+                                <line x1="14" y1="10" x2="14" y2="0" stroke="#333" stroke-width="2"/>
+                                <path d="M 23 22 A 9 9 0 1 0 5 22 A 9 9 0 0 0 23 22 L 23 45 C 23 55 10 55 5 50" 
+                                      stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/>
+                                <g id="flame2" class="flame-container" style="transform-origin: 14px 3px;">
+                                    <path class="flame-outer" d="M14 -15 C20 -2, 20 8, 14 15 C8 8, 8 -2, 14 -15Z" 
+                                          fill="#ff9f43" filter="url(#softGlow)"/>
+                                    <path class="flame-inner" d="M14 -10 C17 -2, 17 4, 14 10 C11 4, 11 -2, 14 -10Z" 
+                                          fill="#fff200"/>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                
+                <div class="animate__animated animate__fadeIn" style="animation-delay: 2.5s;">
+                    <p class="small text-muted mt-2" id="cake-hint">Klik kuenya buat tiyup lilin!</p>
+                    <div id="cake-reveal" style="display: none;" class="mt-3">
+                        <span class="badge bg-white text-danger fs-6 py-2 px-4 rounded-pill shadow animate__animated animate__bounceIn">
+                            🎉 Yeayy camatt ulangg tahun cayanggkuu! 🎉
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <button onclick="document.getElementById('love-letter').scrollIntoView()" class="btn btn-outline-danger rounded-pill px-4 py-2 shadow fw-bold">
+                    Surat <i class="fas fa-envelope"></i>
+                </button>
+                <button onclick="document.getElementById('gacha').scrollIntoView()" class="btn btn-outline-danger rounded-pill px-4 py-2 shadow fw-bold">
+                    Hadiah <i class="fas fa-gift"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="love-letter" class="section">
+        <div class="container">
+            <h2 class="section-title mb-5" data-aos="fade-down">Letter For Tarra Cantik</h2>
+            <div class="paper" data-aos="zoom-in-up">
+                <p><strong>Dear Tarra Ezifa Cindy Hutauruk,</strong></p>
+                <p>Beyumm bikinn ehehe</p>
+                <br>
+                <p class="text-end signature">With Love,<br>Fadlan ❤️</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gacha" class="section">
+        <div class="container text-center">
+            <h2 class="section-title mb-4">🎁 Hadiah ulang tahun buatt kamuu</h2>
+            <p class="text-muted mb-5">Ehehe Hadiah nyaa gachaa yaa, wlee</p>
+            
+            <div class="gacha-box">
+                <div class="gacha-glass">
+                    <div class="ball"></div><div class="ball"></div><div class="ball"></div><div class="ball"></div>
+                </div>
+                <div class="gacha-base"></div>
+            </div>
+
+            <button id="btnGacha" class="btn btn-lg btn-danger rounded-pill px-5 mt-4 shadow fw-bold" onclick="putarGacha()">
+                <i class="fas fa-dice me-2"></i> Putar Gacha
+            </button>
+
+            <div id="gachaResult" class="mt-4" style="display: none;">
+                <div class="card mx-auto shadow border-0" style="max-width: 400px; border-radius: 20px; background: rgba(255,255,255,0.95);">
+                    <div class="card-body p-4">
+                        <h1 class="mb-2">🎉</h1>
+                        <h5 class="text-secondary">Selamat! Yeayy dapett:</h5>
+                        
+                        <h3 class="text-primary fw-bold my-3" id="prizeText" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem;">...</h3>
+                        
+                        <small class="text-muted d-block mb-3">*Screenshot & kirim ke aku!</small>
+                        
+                        <p id="prankText" class="text-danger fw-bold mt-2 animate__animated animate__shakeX" style="display: none;">
+                            Enak aja mau lagi! Jatah cuma satu wlee 😝
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="zoom-in">Our Memories</h2>
+            <div class="row g-3">
+                <div class="col-6 col-md-3" data-aos="fade-up"><div class="gallery-item"><img src="memory1.jpg" onerror="this.src='https://via.placeholder.com/300/ffb3c6/fff?text=Foto+1'"></div></div>
+                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100"><div class="gallery-item"><img src="memory2.jpg" onerror="this.src='https://via.placeholder.com/300/ffb3c6/fff?text=Foto+2'"></div></div>
+                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200"><div class="gallery-item"><img src="memory3.jpg" onerror="this.src='https://via.placeholder.com/300/ffb3c6/fff?text=Foto+3'"></div></div>
+                <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300"><div class="gallery-item"><img src="memory4.jpg" onerror="this.src='https://via.placeholder.com/300/ffb3c6/fff?text=Foto+4'"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="countdown" class="section">
+    <div class="container">
+        <h2 class="section-title" style="color: #a18cd1;">Next Birthday Countdown</h2>
+        <p class="text-center text-muted mb-5">Ciee bentall agii 20 tahun 😛💕</p>
+        <div class="countdown-container mx-auto" style="max-width: 600px;" data-aos="fade-up">
+            
+            <h3 class="mb-4 text-center" style="font-family: 'Dancing Script', cursive; font-size: 1rem; font-weight: bold;">
+                Menuju Ulang Tahun ke-20
+            </h3>
+            <div class="d-flex justify-content-center gap-3 text-center">
+                <div><h2 id="days" class="fw-bold">00</h2><small>Hari</small></div>
+                <div><h2 id="hours" class="fw-bold">00</h2><small>Jam</small></div>
+                <div><h2 id="minutes" class="fw-bold">00</h2><small>Menit</small></div>
+                <div><h2 id="seconds" class="fw-bold">00</h2><small>Detik</small></div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section id="special-surprise" class="section">
+        <div class="container text-center">
+            <h2 class="section-title mb-5" data-aos="fade-down">Special Surprise</h2>
+            
+            <div class="envelope-wrapper" onclick="this.classList.toggle('open')">
+                <div class="envelope-card">
+                    <p class="letter-message">You are the most beautiful thing that ever happened to me.</p>
+                    <p class="letter-message">Happy Birthday my love! 💖</p>
+                </div>
+            </div>
+
+            <p class="text-muted mt-5 small">Klik amplopnya!</p>
+        </div>
+    </section>
+
+    <footer class="text-center py-5 glass-panel mt-5">
+        <p class="m-0 opacity-75">Website ini dibuat dengan penuh cinta dan kasih sayang untuk merayakan hari spesial kamu.</p>
+        <small class="opacity-50">© 2025 Birthday Celebration for Tarra Ezifa ❤️</small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // INIT
+        AOS.init({ duration: 1000, once: true });
+
+        // AUDIO
+        // ========== AUDIO CONTROLLER ==========
+const audio = document.getElementById('bgMusic');
+const playBtn = document.getElementById('playBtn');
+const icon = playBtn.querySelector('i');
+const visualizer = document.getElementById('visualizer');
+const volumeSlider = document.getElementById('volumeSlider');
+
+// 1. Set volume awal
+audio.volume = 0.5; // 50%
+
+let isPlaying = false;
+
+function toggleMusic() {
+    if (isPlaying) {
+        // PAUSE
+        audio.pause();
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play');
+        visualizer.classList.remove('playing'); // Stop animasi
+    } else {
+        // PLAY
+        audio.play();
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+        visualizer.classList.add('playing'); // Mulai animasi
+    }
+    isPlaying = !isPlaying;
+}
+
+playBtn.addEventListener('click', toggleMusic);
+
+// 2. Logika Volume Geser
+volumeSlider.addEventListener('input', function() {
+    audio.volume = this.value;
+});
+
+// 3. Autoplay Trick (Agar musik main saat user klik layar pertama kali)
+document.body.addEventListener('click', () => {
+    if (!isPlaying) toggleMusic();
+}, { once: true });
+
+        // INTERACTIVE CAKE
+        let isBlown = false;
+        function blowOutCake() {
+            if(isBlown) return;
+            const flames = document.querySelectorAll('.flame-container');
+            flames.forEach((flame, index) => {
+                setTimeout(() => {
+                    flame.classList.add('blown-out');
+                }, index * 100);
+            });
+            setTimeout(() => {
+                document.getElementById('cake-hint').style.opacity = '0';
+                document.getElementById('cake-reveal').style.display = 'block';
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                isBlown = true;
+            }, 800);
+        }
+
+        // GACHA LOGIC + ANIMATION BOLA & SPIN HASIL
+        // ========== GACHA LOGIC (WITH PRANK) ==========
+// ========== GACHA LOGIC (PRANK VERSION) ==========
+        const hadiahList = [
+            "Traktir Seblak 🍜", "Nonton Bioskop", "Dicium Fadlan😋😘", 
+            "Voucher 'Jawab Iya Seharian' 🎟️", "Cubit Pipi 🤏", "Dipeluk Fadlan🤗😘", 
+            "Es Klim 🍦", "Voucher tak boyehh malah 🎟️"
+        ];
+
+        function putarGacha() {
+            const btn = document.getElementById('btnGacha');
+            const glass = document.querySelector('.gacha-glass');
+            const resultDiv = document.getElementById('gachaResult');
+            const balls = document.querySelectorAll('.ball');
+            const prankText = document.getElementById('prankText');
+            
+            // Reset State Awal
+            resultDiv.style.display = 'none';
+            resultDiv.classList.remove('spin-in-gift');
+            prankText.style.display = 'none'; // Sembunyikan teks prank jika ada sisa
+            
+            // Ubah tampilan tombol saat mengocok
+            btn.disabled = true; 
+            btn.innerHTML = 'Mengocok...';
+            glass.classList.add('shake-anim');
+
+            // Animasi bola berputar
+            let interval = setInterval(() => {
+                balls.forEach(b => {
+                    b.style.top = Math.random() * 150 + 'px';
+                    b.style.left = Math.random() * 150 + 'px';
+                    b.style.transform = `rotate(${Math.random() * 360}deg)`;
+                });
+            }, 100);
+
+            // Selesai Mengocok (2 Detik)
+            setTimeout(() => {
+                clearInterval(interval);
+                glass.classList.remove('shake-anim');
+                
+                // Pilih Hadiah
+                const prize = hadiahList[Math.floor(Math.random() * hadiahList.length)];
+                document.getElementById('prizeText').innerText = prize;
+                
+                // Munculkan Kartu Hasil
+                resultDiv.style.display = 'block';
+                resultDiv.classList.add('spin-in-gift');
+                
+                // --- UPDATE TOMBOL PINK ---
+                btn.disabled = false; 
+                btn.innerHTML = 'Putar Lagi'; // Ubah teks tombol utama
+                btn.setAttribute('onclick', 'runPrank()'); // Ganti fungsi tombol jadi Prank
+                
+                // Efek Confetti
+                confetti({ particleCount: 100, spread: 60, origin: { y: 0.7 } });
+            }, 2000);
+        }
+
+        function runPrank() {
+            const btn = document.getElementById('btnGacha');
+            const prankText = document.getElementById('prankText');
+            
+            // Ubah Tombol jadi Merah & Teks Ledekan
+            btn.innerHTML = "GABISA 😝";
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-dark'); // Ganti warna tombol jadi gelap/beda
+            
+            // Munculkan Teks di dalam Kartu
+            prankText.style.display = 'block';
+            
+            // Efek Getar pada teks
+            prankText.classList.remove('animate__shakeX'); // Reset animasi biar bisa play lagi
+            void prankText.offsetWidth; // Trigger reflow
+            prankText.classList.add('animate__shakeX');
+        }
+
+function resetGacha() { 
+    document.getElementById('gachaResult').style.display = 'none';
+}
+        // COUNTDOWN
+        function updateTimer() {
+            const nextBday = new Date(`December 02, ${new Date().getFullYear() + 1} 00:00:00`);
+            const now = new Date();
+            if(now > nextBday) nextBday.setFullYear(nextBday.getFullYear() + 1);
+            const diff = nextBday - now;
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            document.getElementById('minutes').innerText = Math.floor((diff / 1000 / 60) % 60);
+            document.getElementById('seconds').innerText = Math.floor((diff / 1000) % 60);
+        }
+        setInterval(updateTimer, 1000); updateTimer();
+
+        // THREE.JS HEARTS
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('threejsCanvas').appendChild(renderer.domElement);
+        
+        const geo = new THREE.SphereGeometry(0.2, 16, 16);
+        const mat = new THREE.MeshBasicMaterial({ color: 0xff6b8b, transparent: true, opacity: 0.5 });
+        const hearts = [];
+        for(let i=0; i<35; i++) {
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.set((Math.random()-0.5)*15, (Math.random()-0.5)*15, (Math.random()-0.5)*10);
+            scene.add(mesh);
+            hearts.push({ mesh, speed: Math.random()*0.02 });
+        }
+        camera.position.z = 5;
+        function animate() {
+            requestAnimationFrame(animate);
+            hearts.forEach(h => {
+                h.mesh.position.y += h.speed;
+                if(h.mesh.position.y > 6) h.mesh.position.y = -6;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth/window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>
